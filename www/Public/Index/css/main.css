@@ -10676,9 +10676,14 @@ select {
         line-height: 90px;
         -webkit-transition: line-height .5s;
                 transition: line-height .5s; }
-        .header > div .userpanel .userpanel_login .mod-btn {
+        .header > div .userpanel .userpanel_login .login-btn-1 {
           width: 110px;
-          margin: 0 20px;
+          margin: 0 5px 0 10px;
+          -webkit-transition: color .2s, border-color .2s, width .5s, height .5s, line-height .5s;
+                  transition: color .2s, border-color .2s, width .5s, height .5s, line-height .5s; }
+        .header > div .userpanel .userpanel_login .login-btn-2 {
+          width: 110px;
+          margin: 0 0;
           -webkit-transition: color .2s, border-color .2s, width .5s, height .5s, line-height .5s;
                   transition: color .2s, border-color .2s, width .5s, height .5s, line-height .5s; }
       .header > div .userpanel .userpanel_user {
