@@ -1,28 +1,19 @@
 FROM php:7.4-fpm
-RUN echo "deb http://mirrors.aliyun.com/debian/ buster main non-free contrib \n \
-deb-src http://mirrors.aliyun.com/debian/ buster main non-free contrib \n \
-deb http://mirrors.aliyun.com/debian-security buster/updates main \n \
-deb-src http://mirrors.aliyun.com/debian-security buster/updates main \n \
-deb http://mirrors.aliyun.com/debian/ buster-updates main non-free contrib \n \
-deb-src http://mirrors.aliyun.com/debian/ buster-updates main non-free contrib \n \
-deb http://mirrors.aliyun.com/debian/ buster-backports main non-free contrib \n \
-deb-src http://mirrors.aliyun.com/debian/ buster-backports main non-free contrib" > /etc/apt/sources.list \
-&& apt-get update \
-    && apt-get install -y \
-    build-essential \
-    libmagickcore-dev \
-    libmagickwand-dev \
-    imagemagick \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libpng-dev \
-    libzip-dev \
-     && docker-php-ext-configure gd  --with-webp=/usr/include/webp --with-jpeg=/usr/include --with-freetype=/usr/include/freetype2/ \
-    && docker-php-ext-install -j$(nproc) gd iconv  pdo_mysql  mysqli bcmath calendar exif gettext sockets dba  pcntl  shmop sysvmsg sysvsem sysvshm \
-    && pecl install redis-5.1.1 \
-    && pecl install imagick \
-    && pecl install mcrypt \
-    && docker-php-ext-enable redis imagick mcrypt
+RUN apt-get update && apt-get install -y \
+        zlib1g-dev libzip-dev \ 
+        libfreetype6-dev \
+        libjpeg62-turbo-dev \
+        libmcrypt-dev \
+        libpng-dev \
+        libmemcached-dev \
+        zlib1g-dev \
+        libcurl4-openssl-dev \
+        libxml2-dev \
+        --no-install-recommends && rm -rf /var/lib/apt/lists/* \
+    && docker-php-ext-install -j$(nproc) \
+        gettext mysqli pdo_mysql zip \
+        bcmath opcache sockets soap \
+    && docker-php-ext-configure gd  --with-freetype --with-jpeg \
+    && docker-php-ext-install -j$(nproc) gd
 
 CMD ["php-fpm", "-F"]
